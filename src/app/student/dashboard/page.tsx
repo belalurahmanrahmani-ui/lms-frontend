@@ -5,6 +5,11 @@ import { apiFetchServer, ApiError } from "@/lib/api/server";
 import type { StudentDashboard } from "@/types/dashboard";
 import type { CourseProgress } from "@/types/progress";
 
+function formatDate(value: string) {
+  // Backend زمان را UTC و بدون Z می‌فرستد؛ Z را اضافه می‌کنیم تا درست خوانده شود
+  const iso = value.endsWith("Z") ? value : `${value}Z`;
+  return new Date(iso).toLocaleDateString("en-GB");
+}
 export default async function StudentDashboardPage() {
   let data: StudentDashboard | null = null;
   let progress: CourseProgress[] = [];
@@ -27,7 +32,6 @@ export default async function StudentDashboardPage() {
     return <p className="text-destructive">{errorMessage}</p>;
   }
 
-  // پیشرفت کلی = درس‌های تکمیل‌شده ÷ کل درس‌ها (طبق قانون پروژه)
   const totalLessons = progress.reduce((sum, item) => sum + item.totalLessons, 0);
   const completedLessons = progress.reduce(
     (sum, item) => sum + item.completedLessons,
@@ -82,7 +86,7 @@ export default async function StudentDashboardPage() {
         )}
       </section>
 
-      <section className="rounded-2xl border border-border bg-card p-5">
+            <section className="rounded-2xl border border-border bg-card p-5">
         <h2 className="mb-4 flex items-center gap-2 font-heading text-lg">
           <Clock className="h-4 w-4" />
           Recent Lessons
@@ -90,12 +94,28 @@ export default async function StudentDashboardPage() {
 
         {data.recentLessons.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            هنوز هیچ درسی شروع نشده است.
+            هنوز هیچ درسی را تکمیل نکرده‌ای.
           </p>
         ) : (
-          <pre className="text-xs text-muted-foreground">
-            {JSON.stringify(data.recentLessons, null, 2)}
-          </pre>
+          <ul className="divide-y divide-border">
+            {data.recentLessons.map((lesson) => (
+              <li
+                key={lesson.lessonId}
+                className="flex items-center gap-3 py-3"
+              >
+                <CheckCircle className="h-4 w-4 shrink-0 text-emerald-400" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm">{lesson.lessonTitle.trim()}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {lesson.courseTitle.trim()}
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {formatDate(lesson.completedAt)}
+                </span>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
     </div>
