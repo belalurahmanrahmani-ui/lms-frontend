@@ -2,7 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, BookOpen, User, type LucideIcon,PlusCircle ,GraduationCap} from "lucide-react";
+import {
+  LayoutDashboard,
+  BookOpen,
+  User,
+  PlusCircle,
+  GraduationCap,
+  Users,
+  Tags,
+  type LucideIcon,
+} from "lucide-react";
+
+
 // import { LayoutDashboard, BookOpen, User, PlusCircle, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -66,4 +77,10 @@ export const teacherLinks: SidebarLink[] = [
   { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/teacher/courses", label: "My Courses", icon: BookOpen },
   { href: "/teacher/courses/create", label: "Create Course", icon: PlusCircle },
+];
+export const adminLinks: SidebarLink[] = [
+  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/users", label: "Users", icon: Users },
+  { href: "/admin/courses", label: "Courses", icon: BookOpen },
+  { href: "/admin/categories", label: "Categories", icon: Tags },
 ];

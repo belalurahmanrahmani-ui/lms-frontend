@@ -15,3 +15,11 @@ export type RecentLesson = {
   courseTitle: string;
   completedAt: string;
 };
+export type AdminDashboard = {
+  totalUsers: number;
+  totalTeachers: number;
+  totalStudents: number;
+  totalCourses: number;
+  publishedCourses: number;
+  totalEnrollments: number;
+};
