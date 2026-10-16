@@ -8,6 +8,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import type { AdminUser } from "@/types/user";
+import { AddUserButton } from "@/components/user/AddUserButton";
 
 const roleTabs = ["All", "Admin", "Teacher", "Student"];
 
@@ -78,6 +79,7 @@ export default async function AdminUsersPage({
             Search
           </Button>
         </form>
+        <AddUserButton />
       </div>
 
       <div className="flex flex-wrap gap-2">
