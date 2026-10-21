@@ -1,35 +1,44 @@
-import { NextResponse } from "next/server";
-import { apiFetch, ApiError } from "@/lib/api/client";
-import { getRefreshToken, setAuthSession, clearAuthSession } from "@/lib/auth/session";
-import type { AuthResponse } from "@/types/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { refreshAuthSession } from "@/lib/auth/refresh";
 
-export async function POST() {
-  const refreshToken = await getRefreshToken();
-
-  if (!refreshToken) {
-    return NextResponse.json({ message: "نشست منقضی شده است" }, { status: 401 });
+// جلوگیری از Open Redirect: فقط مسیر داخلی همین سایت
+function safeRedirectPath(value: string | null) {
+  if (!value) return "/";
+  if (!value.startsWith("/") || value.startsWith("//") || value.startsWith("/\\")) {
+    return "/";
   }
+  return value;
+}
 
-  try {
-    const auth = await apiFetch<AuthResponse>("/Auth/refresh-token", {
-      method: "POST",
-      body: { refreshToken },
-    });
+// برای فراخوانی با Fetch
+export async function POST() {
+  const auth = await refreshAuthSession();
 
-    await setAuthSession(auth);
-
-    return NextResponse.json({
-      userId: auth.userId,
-      fullName: auth.fullName,
-      email: auth.email,
-      role: auth.role,
-    });
-  } catch (error) {
-    await clearAuthSession();
-    const status = error instanceof ApiError ? error.status : 500;
+  if (!auth) {
     return NextResponse.json(
       { message: "نشست منقضی شده، لطفاً دوباره وارد شوید" },
-      { status }
+      { status: 401 }
     );
   }
+
+  return NextResponse.json({
+    userId: auth.userId,
+    fullName: auth.fullName,
+    email: auth.email,
+    role: auth.role,
+  });
+}
+
+// برای Middleware: Refresh و بازگشت به همان صفحه
+export async function GET(request: NextRequest) {
+  const redirectTo = safeRedirectPath(request.nextUrl.searchParams.get("redirectTo"));
+  const auth = await refreshAuthSession();
+
+  if (!auth) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirectTo", redirectTo);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  return NextResponse.redirect(new URL(redirectTo, request.url));
 }

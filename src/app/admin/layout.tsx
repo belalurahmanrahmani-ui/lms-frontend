@@ -1,8 +1,8 @@
-import { Sidebar, adminLinks } from "@/components/layout/Sidebar";
+import { adminLinks, Sidebar, teacherLinks } from "@/components/layout/Sidebar";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { getCurrentUser } from "@/lib/auth/session";
 
-export default async function AdminLayout({
+export default async function TeacherLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,10 +11,10 @@ export default async function AdminLayout({
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar links={adminLinks} />
+      <Sidebar links={teacherLinks} />
 
       <div className="min-w-0 flex-1">
-        <DashboardHeader user={user} />
+        <DashboardHeader user={user} links={adminLinks} />
         <main className="p-6">{children}</main>
       </div>
     </div>

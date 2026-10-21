@@ -17,22 +17,25 @@ import {
 // import { LayoutDashboard, BookOpen, User, PlusCircle, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type SidebarLink = {
+export type SidebarLink = {
   href: string;
   label: string;
   icon: LucideIcon;
 };
 
-export function Sidebar({ links }: { links: SidebarLink[] }) {
-  const pathname = usePathname();
-
-  // آیتمی فعال است که طولانی‌ترین مسیر منطبق را دارد
-  // (تا در /teacher/courses/5 آیتم «My Courses» فعال بماند، ولی /create دو آیتم را فعال نکند)
-  const activeHref = links
+// آیتمی فعال است که طولانی‌ترین مسیر منطبق را دارد
+// (تا در /teacher/courses/5 آیتم «My Courses» فعال بماند، ولی /create دو آیتم را فعال نکند)
+export function getActiveHref(pathname: string, links: SidebarLink[]) {
+  return links
     .filter(
       (link) => pathname === link.href || pathname.startsWith(link.href + "/")
     )
     .sort((a, b) => b.href.length - a.href.length)[0]?.href;
+}
+
+export function Sidebar({ links }: { links: SidebarLink[] }) {
+    const pathname = usePathname();
+  const activeHref = getActiveHref(pathname, links);
 
   return (
     <aside className="hidden w-64 shrink-0 border-r border-border bg-card/40 md:block">

@@ -51,9 +51,16 @@ export function CourseCard({ course }: { course: Course }) {
         </div>
 
         <div className="flex items-center justify-between border-t border-border pt-3">
-          <span className="font-heading text-lg text-highlight">
-            {isFree ? "Free" : `$${course.price}`}
-          </span>
+                    <div className="leading-tight">
+            <span className="font-heading text-lg text-highlight">
+              {isFree ? "Free" : `$${course.price}`}
+            </span>
+            {!isFree && (
+              <p className="text-xs text-muted-foreground">
+                Free enrollment for now
+              </p>
+            )}
+          </div>
 
           <Button
             size="sm"

@@ -21,8 +21,19 @@ export function middleware(request: NextRequest) {
   const userCookie = request.cookies.get("lms_user")?.value;
   const user = userCookie ? JSON.parse(userCookie) : null;
 
-  const requiredRole = getRequiredRole(pathname);
+    const hasRefreshToken = Boolean(request.cookies.get("lms_refresh_token")?.value);
   const isAuthPage = pathname === "/login" || pathname === "/register";
+
+  // Access Token منقضی شده ولی Refresh Token هنوز هست: به‌جای Logout، Session تازه شود
+  if (!user && hasRefreshToken && !isAuthPage) {
+    const refreshUrl = new URL("/api/auth/refresh", request.url);
+    refreshUrl.searchParams.set("redirectTo", pathname + request.nextUrl.search);
+    return NextResponse.redirect(refreshUrl);
+  }
+
+
+  const requiredRole = getRequiredRole(pathname);
+  
 
   // تلاش برای ورود به صفحه محافظت‌شده بدون Login
   if (requiredRole && !user) {
@@ -45,11 +56,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/teacher/:path*",
-    "/student/:path*",
-    "/login",
-    "/register",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
 };
