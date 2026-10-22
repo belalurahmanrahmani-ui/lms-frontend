@@ -13,6 +13,7 @@ import type { Lesson } from "@/types/lesson";
 import type { Category } from "@/types/category";
 import { ProgressBar } from "@/components/shared/ProgressBar";
 import type { CourseStudent } from "@/types/student";
+import Image from "next/image";
 
 const UNSET_ORDER = 2147483647;
 function formatDate(value: string) {
@@ -91,7 +92,10 @@ export default async function ManageCoursePage({
     .filter((lesson) => lesson.order < UNSET_ORDER)
     .map((lesson) => lesson.order);
   const nextOrder = usedOrders.length > 0 ? Math.max(...usedOrders) + 1 : 1;
-
+  const thumbnailUrl =
+    detail.thumbnail && detail.thumbnail.startsWith("http")
+      ? detail.thumbnail
+      : null;
   return (
     <div className="space-y-6">
       {/* Hero panel */}
@@ -124,11 +128,20 @@ export default async function ManageCoursePage({
 
             <CourseActions courseId={detail.id} isPublished={myCourse.isPublished} />
           </div>
-
-          <div className="hidden h-40 w-56 items-center justify-center rounded-3xl bg-primary/20 md:flex">
-            <span className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg">
-              <PlayCircle className="h-10 w-10" />
-            </span>
+          <div className="relative hidden h-60 w-96 items-center justify-center overflow-hidden rounded-3xl bg-primary/20 md:flex">
+            {thumbnailUrl ? (
+              <Image
+                src={thumbnailUrl}
+                alt={detail.title}
+                fill
+                sizes="224px"
+                className="object-cover"
+              />
+            ) : (
+              <span className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg">
+                <PlayCircle className="h-10 w-10" />
+              </span>
+            )}
           </div>
         </div>
       </section>

@@ -8,12 +8,14 @@ import { Label } from "@/components/ui/label";
 import { CategorySelect } from "@/components/shared/CategorySelect";
 import { callBackend } from "@/lib/api/browser";
 import type { Category } from "@/types/category";
+import { CloudinaryUploader } from "@/components/shared/CloudinaryUploader";
 
 export function CreateCourseForm({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [price, setPrice] = useState("0");
   const [categoryId, setCategoryId] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +29,9 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
     const result = await callBackend<{ id: number }>("Course", "POST", {
       title,
       description,
-      thumbnail: thumbnail.trim() || null,
+      thumbnail,
       price: Number(price),
+      
       categoryId: Number(categoryId),
     });
 
@@ -78,16 +81,15 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="thumbnail">Thumbnail URL (optional)</Label>
-        <Input
-          id="thumbnail"
-          type="url"
+        <Label>Thumbnail (optional)</Label>
+        <CloudinaryUploader
+          kind="image"
           value={thumbnail}
-          onChange={(e) => setThumbnail(e.target.value)}
-          placeholder="https://..."
+          onChange={setThumbnail}
+          onBusyChange={setIsUploading}
+          disabled={isLoading}
         />
       </div>
-
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <Label htmlFor="price">Price</Label>
@@ -118,7 +120,10 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
         </p>
       )}
 
-      <Button type="submit" disabled={isLoading || categories.length === 0}>
+            <Button
+        type="submit"
+        disabled={isLoading || isUploading || categories.length === 0}
+      >
         {isLoading ? "در حال ساخت..." : "Create Course"}
       </Button>
     </form>

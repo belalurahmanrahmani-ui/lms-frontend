@@ -9,12 +9,16 @@ import { Label } from "@/components/ui/label";
 import { callBackend } from "@/lib/api/browser";
 import type { Lesson } from "@/types/lesson";
 import type { Material } from "@/types/material";
+import { CloudinaryUploader } from "@/components/shared/CloudinaryUploader";
 
 const iconButton =
   "rounded-md p-1.5 transition-colors hover:bg-accent disabled:opacity-50";
 
 const isSafeUrl = (url: string) => /^https?:\/\//i.test(url);
-
+function fileExtension(name: string) {
+  const extension = name.split(".").pop()?.toLowerCase() ?? "";
+  return extension.length > 0 && extension.length <= 20 ? extension : "";
+}
 function MaterialForm({
   lessonId,
   material,
@@ -27,18 +31,24 @@ function MaterialForm({
   onCancel: () => void;
 }) {
   const [fileName, setFileName] = useState(material?.fileName ?? "");
-  const [fileUrl, setFileUrl] = useState(material?.fileUrl ?? "");
+  const [fileUrl, setFileUrl] = useState<string | null>(material?.fileUrl ?? null);
   const [fileType, setFileType] = useState(material?.fileType ?? "pdf");
+  const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // بعد از آپلود موفق: نام و نوع فایل خودکار پر می‌شوند (نام فقط اگر خالی بود)
+  function handleFileInfo(file: File) {
+    if (!fileName.trim()) setFileName(file.name);
+    setFileType(fileExtension(file.name) || fileType);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
-    // لینک فایل بعداً برای دانشجوها باز می‌شود؛ فقط http/https مجاز است
-    if (!isSafeUrl(fileUrl)) {
-      setError("آدرس فایل باید با http:// یا https:// شروع شود");
+    if (!fileUrl) {
+      setError("ابتدا فایل را آپلود کنید");
       return;
     }
 
@@ -67,25 +77,26 @@ function MaterialForm({
       )}
 
       <div className="space-y-1.5">
+        <Label>File</Label>
+        <CloudinaryUploader
+          kind="file"
+          value={fileUrl}
+          onChange={setFileUrl}
+          onBusyChange={setIsUploading}
+          onFileInfo={handleFileInfo}
+          disabled={isLoading}
+        />
+      </div>
+
+      <div className="space-y-1.5">
         <Label htmlFor="material-name">File Name</Label>
         <Input
           id="material-name"
           required
           minLength={2}
+          maxLength={150}
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="material-url">File URL</Label>
-        <Input
-          id="material-url"
-          type="url"
-          required
-          value={fileUrl}
-          onChange={(e) => setFileUrl(e.target.value)}
-          placeholder="https://..."
         />
       </div>
 
@@ -105,12 +116,11 @@ function MaterialForm({
           <option value="pptx" />
           <option value="xlsx" />
           <option value="zip" />
-          <option value="image" />
         </datalist>
       </div>
 
       <div className="flex gap-2">
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading || isUploading}>
           {isLoading ? "در حال ذخیره..." : material ? "Save Changes" : "Add Material"}
         </Button>
         <Button type="button" variant="outline" onClick={onCancel}>

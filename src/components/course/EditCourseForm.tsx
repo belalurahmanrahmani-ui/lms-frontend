@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { CategorySelect } from "@/components/shared/CategorySelect";
 import { callBackend } from "@/lib/api/browser";
 import type { Category } from "@/types/category";
+import { CloudinaryUploader } from "@/components/shared/CloudinaryUploader";
 
 type EditableCourse = {
   id: number;
@@ -28,12 +29,15 @@ export function EditCourseForm({
   const router = useRouter();
   const [title, setTitle] = useState(course.title);
   const [description, setDescription] = useState(course.description);
-  const [thumbnail, setThumbnail] = useState(course.thumbnail ?? "");
   const [price, setPrice] = useState(String(course.price));
   const [categoryId, setCategoryId] = useState(String(course.categoryId));
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+    const [thumbnail, setThumbnail] = useState<string | null>(
+    course.thumbnail?.startsWith("http") ? course.thumbnail : null
+  );
+  const [isUploading, setIsUploading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,7 +48,7 @@ export function EditCourseForm({
     const result = await callBackend(`Course/${course.id}`, "PUT", {
       title,
       description,
-      thumbnail: thumbnail.trim() || null,
+      thumbnail,
       price: Number(price),
       categoryId: Number(categoryId),
     });
@@ -99,13 +103,14 @@ export function EditCourseForm({
         />
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="edit-thumbnail">Thumbnail URL (optional)</Label>
-        <Input
-          id="edit-thumbnail"
-          type="url"
+            <div className="space-y-1.5">
+        <Label>Thumbnail (optional)</Label>
+        <CloudinaryUploader
+          kind="image"
           value={thumbnail}
-          onChange={(e) => setThumbnail(e.target.value)}
+          onChange={setThumbnail}
+          onBusyChange={setIsUploading}
+          disabled={isLoading}
         />
       </div>
 
@@ -133,7 +138,7 @@ export function EditCourseForm({
         </div>
       </div>
 
-      <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading || isUploading}>
         {isLoading ? "در حال ذخیره..." : "Save Changes"}
       </Button>
     </form>

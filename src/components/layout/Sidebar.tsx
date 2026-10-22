@@ -80,6 +80,7 @@ export const teacherLinks: SidebarLink[] = [
   { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/teacher/courses", label: "My Courses", icon: BookOpen },
   { href: "/teacher/courses/create", label: "Create Course", icon: PlusCircle },
+  { href: "/teacher/profile", label: "Profile", icon: User },
 ];
 export const adminLinks: SidebarLink[] = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },

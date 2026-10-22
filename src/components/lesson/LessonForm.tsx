@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { callBackend } from "@/lib/api/browser";
 import type { Lesson } from "@/types/lesson";
+import { CloudinaryUploader } from "@/components/shared/CloudinaryUploader";
 
 type LessonFormProps =
   | { mode: "create"; courseId: number; defaultOrder: number; onDone: () => void }
@@ -18,7 +19,8 @@ export function LessonForm(props: LessonFormProps) {
 
   const [title, setTitle] = useState(lesson?.title.trim() ?? "");
   const [description, setDescription] = useState(lesson?.description ?? "");
-  const [videoUrl, setVideoUrl] = useState(lesson?.videoUrl ?? "");
+  const [videoUrl, setVideoUrl] = useState<string | null>(lesson?.videoUrl || null);
+  const [isUploading, setIsUploading] = useState(false);
   const [duration, setDuration] = useState(String(lesson?.duration ?? 10));
   const [order, setOrder] = useState(
     props.mode === "edit" ? String(props.lesson.order) : String(props.defaultOrder)
@@ -31,18 +33,18 @@ export function LessonForm(props: LessonFormProps) {
     setError(null);
 
     // ویدیو اختیاری است، ولی اگر وارد شد باید http/https باشد
-    const cleanVideoUrl = videoUrl.trim();
-    if (cleanVideoUrl && !/^https?:\/\//i.test(cleanVideoUrl)) {
-      setError("آدرس ویدیو باید با http:// یا https:// شروع شود");
-      return;
-    }
+    // const cleanVideoUrl = videoUrl.trim();
+    // if (cleanVideoUrl && !/^https?:\/\//i.test(cleanVideoUrl)) {
+    //   setError("آدرس ویدیو باید با http:// یا https:// شروع شود");
+    //   return;
+    // }
 
     setIsLoading(true);
 
     const body = {
       title,
       description: description.trim() || null,
-      videoUrl: cleanVideoUrl || null,
+      videoUrl,
       duration: Number(duration),
       order: Number(order),
     };
@@ -95,13 +97,13 @@ export function LessonForm(props: LessonFormProps) {
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="lesson-video">Video URL (optional)</Label>
-        <Input
-          id="lesson-video"
-          type="url"
+        <Label>Video (optional)</Label>
+        <CloudinaryUploader
+          kind="video"
           value={videoUrl}
-          onChange={(e) => setVideoUrl(e.target.value)}
-          placeholder="https://..."
+          onChange={setVideoUrl}
+          onBusyChange={setIsUploading}
+          disabled={isLoading}
         />
       </div>
 
@@ -131,7 +133,7 @@ export function LessonForm(props: LessonFormProps) {
         </div>
       </div>
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full" disabled={isLoading || isUploading}>
         {isLoading
           ? "در حال ذخیره..."
           : props.mode === "create"
