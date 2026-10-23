@@ -87,7 +87,7 @@ export function UserForm({
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "در حال ذخیره..." : "Save Changes"}
+        {isLoading ? " Saveing ..." : "Save Changes"}
       </Button>
     </form>
   );

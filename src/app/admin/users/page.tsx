@@ -33,7 +33,7 @@ export default async function AdminUsersPage({
     users = await apiFetchServer<AdminUser[]>("/Admin/users");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت کاربران";
+      error instanceof ApiError ? error.message : "Error fetching Users.";
   }
 
   if (errorMessage) {
@@ -107,7 +107,7 @@ export default async function AdminUsersPage({
         {filteredUsers.length === 0 ? (
           <div className="flex flex-col items-center gap-3 p-12 text-center">
             <Users className="h-8 w-8 text-muted-foreground" />
-            <p className="text-muted-foreground">کاربری پیدا نشد.</p>
+            <p className="text-muted-foreground">User in not found</p>
           </div>
         ) : (
           <div className="overflow-x-auto">

@@ -78,7 +78,7 @@ export function CategoryForm(props: CategoryFormProps) {
 
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading
-          ? "در حال ذخیره..."
+          ? "Saving ..."
           : props.mode === "create"
             ? "Add Category"
             : "Save Changes"}

@@ -11,7 +11,7 @@ export default async function TeacherLayout({
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar links={teacherLinks} />
+      <Sidebar links={adminLinks} />
 
       <div className="min-w-0 flex-1">
         <DashboardHeader user={user} links={adminLinks} />

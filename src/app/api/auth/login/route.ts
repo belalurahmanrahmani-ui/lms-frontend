@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 500;
     const message =
-      error instanceof ApiError ? error.message : "ایمیل یا رمز عبور اشتباه است";
+      error instanceof ApiError ? error.message : "Email or Password is not found";
     return NextResponse.json({ message }, { status });
   }
 }

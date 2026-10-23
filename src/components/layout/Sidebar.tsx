@@ -87,4 +87,6 @@ export const adminLinks: SidebarLink[] = [
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/courses", label: "Courses", icon: BookOpen },
   { href: "/admin/categories", label: "Categories", icon: Tags },
+  
+
 ];

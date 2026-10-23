@@ -11,7 +11,7 @@ export default async function TeacherDashboardPage() {
     data = await apiFetchServer<TeacherDashboard>("/Teacher/dashboard");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت اطلاعات داشبورد";
+      error instanceof ApiError ? error.message : "Error fetching dashboard data.";
   }
 
   if (errorMessage || !data) {

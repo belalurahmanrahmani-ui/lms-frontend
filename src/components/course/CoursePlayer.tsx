@@ -102,7 +102,7 @@ export function CoursePlayer({
         ) : (
           <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-2xl border border-border bg-card text-muted-foreground">
             <PlayCircle className="h-10 w-10" />
-            <span className="text-sm">این درس ویدیو ندارد.</span>
+            <span className="text-sm">This course has not a lesson </span>
           </div>
         )}
 
@@ -119,7 +119,7 @@ export function CoursePlayer({
             </span>
           ) : (
             <Button onClick={handleComplete} disabled={isSaving}>
-              {isSaving ? "در حال ثبت..." : "Mark as completed"}
+              {isSaving ? "Ragiteing ..." : "Mark as completed"}
             </Button>
           )}
         </div>
@@ -138,7 +138,7 @@ export function CoursePlayer({
           <h3 className="font-heading text-base">Materials</h3>
 
           {materials === undefined ? (
-            <p className="text-sm text-muted-foreground">در حال بارگذاری...</p>
+            <p className="text-sm text-muted-foreground">Loading...</p>
           ) : materials.length === 0 ? (
             <p className="text-sm text-muted-foreground">
               این درس فایلی ندارد.

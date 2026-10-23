@@ -65,7 +65,7 @@ export default async function ManageCoursePage({
       notFound();
     }
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت اطلاعات دوره";
+      error instanceof ApiError ? error.message : "Error fetching course information.";
   }
 
   if (errorMessage) {
@@ -82,7 +82,7 @@ export default async function ManageCoursePage({
     students = await apiFetchServer<CourseStudent[]>(`/courses/${id}/students`);
   } catch (error) {
     studentsError =
-      error instanceof ApiError ? error.message : "خطا در دریافت دانشجوها";
+      error instanceof ApiError ? error.message : "Error fetching students.";
   }
 
   const sortedLessons = [...lessons].sort((a, b) => a.order - b.order);
@@ -178,7 +178,7 @@ export default async function ManageCoursePage({
 
         {sortedLessons.length === 0 ? (
           <p className="px-5 pb-5 text-sm text-muted-foreground">
-            هنوز درسی اضافه نشده است.
+           No Lesson added yet 
           </p>
         ) : (
           <div className="overflow-x-auto">
@@ -228,7 +228,8 @@ export default async function ManageCoursePage({
           <p className="px-5 pb-5 text-sm text-destructive">{studentsError}</p>
         ) : students.length === 0 ? (
           <p className="px-5 pb-5 text-sm text-muted-foreground">
-            هنوز هیچ دانشجویی در این دوره ثبت‌نام نکرده است.
+          
+            No students have been  enrolled at thsi course yet 
           </p>
         ) : (
           <div className="overflow-x-auto">

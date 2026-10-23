@@ -28,14 +28,14 @@ export function LoginForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message ?? "ورود ناموفق بود");
+        setError(data.message ?? "Login failed");
         return;
       }
 
       router.push("/");
       router.refresh();
     } catch {
-      setError("خطا در اتصال به سرور");
+      setError("Error connecting to the server");
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +74,7 @@ export function LoginForm() {
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "در حال ورود..." : "Login"}
+        {isLoading ? "Logging in ..." : "Login"}
       </Button>
     </form>
   );

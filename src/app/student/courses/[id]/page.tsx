@@ -60,7 +60,7 @@ export default async function StudentCoursePage({
       <div className="space-y-2">
         <h1 className="font-heading text-2xl">{course.title}</h1>
         <p className="text-muted-foreground">
-          هنوز درسی در این دوره منتشر نشده است.
+        No lessons have been published in this course yet
         </p>
       </div>
     );

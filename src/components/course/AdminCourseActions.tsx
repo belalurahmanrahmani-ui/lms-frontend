@@ -40,7 +40,7 @@ export function AdminCourseActions({
   async function handleDelete() {
     if (
       !window.confirm(
-        `دوره «${title.trim()}» حذف شود؟ این کار قابل بازگشت نیست.`
+        `دوره «${title.trim()}» do you want to delete it `
       )
     ) {
       return;

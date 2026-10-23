@@ -75,12 +75,12 @@ export function RoleForm({
 
       {isChanged && role === "Admin" && (
         <p className="rounded-md bg-amber-500/10 px-3 py-2 text-sm text-amber-400">
-          توجه: نقش Admin به این کاربر دسترسی کامل به کل سیستم می‌دهد.
+         Note: Assigning the Admin role to this user grants full access to the entire system.
         </p>
       )}
 
       <Button type="submit" className="w-full" disabled={!isChanged || isLoading}>
-        {isLoading ? "در حال ذخیره..." : "Change Role"}
+        {isLoading ? " Saving ..." : "Change Role"}
       </Button>
     </form>
   );

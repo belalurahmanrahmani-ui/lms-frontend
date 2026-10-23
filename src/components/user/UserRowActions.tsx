@@ -44,7 +44,7 @@ export function UserRowActions({
   async function handleDelete() {
     if (
       !window.confirm(
-        `کاربر «${user.fullName}» حذف شود؟ این کار قابل بازگشت نیست.`
+        ` are you soure to delete this  «${user.fullName}» User`
       )
     ) {
       return;
@@ -71,7 +71,7 @@ export function UserRowActions({
           type="button"
           onClick={() => setIsChangingRole(true)}
           disabled={isLoading || isSelf}
-          title={isSelf ? "نمی‌توانی نقش خودت را عوض کنی" : "Change role"}
+          title={isSelf ? "You can not change your role" : "Change role"}
           className={`${iconButton} text-highlight`}
         >
           <UserCog className="h-4 w-4" />
@@ -83,7 +83,7 @@ export function UserRowActions({
           disabled={isLoading || isSelf}
           title={
             isSelf
-              ? "نمی‌توانی حساب خودت را غیرفعال کنی"
+              ? "You can not Deactivate your owen acount"
               : user.isActive
                 ? "Deactivate"
                 : "Activate"
@@ -113,7 +113,7 @@ export function UserRowActions({
           type="button"
           onClick={handleDelete}
           disabled={isLoading || isSelf}
-          title={isSelf ? "نمی‌توانی حساب خودت را حذف کنی" : "Delete"}
+          title={isSelf ? "You can not delete your owen acount " : "Delete"}
           className={`${iconButton} text-rose-400`}
         >
           <Trash2 className="h-4 w-4" />

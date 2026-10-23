@@ -38,7 +38,7 @@ export function CategoryRowActions({ category }: { category: Category }) {
   const [error, setError] = useState<string | null>(null);
 
   async function handleDelete() {
-    if (!window.confirm(`دسته‌بندی «${category.name}» حذف شود؟`)) return;
+    if (!window.confirm(`Category «${category.name}» Delete it ?`)) return;
 
     setError(null);
     setIsLoading(true);

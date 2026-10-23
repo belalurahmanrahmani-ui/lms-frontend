@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const status = error instanceof ApiError ? error.status : 500;
     const message =
-      error instanceof ApiError ? error.message : "خطای غیرمنتظره رخ داد";
+      error instanceof ApiError ? error.message : "an unexpected error happend";
     return NextResponse.json({ message }, { status });
   }
 }

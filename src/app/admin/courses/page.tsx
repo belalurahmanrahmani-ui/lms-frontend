@@ -24,7 +24,7 @@ export default async function AdminCoursesPage({
     courses = await apiFetchServer<Course[]>("/Admin/courses");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت دوره‌ها";
+      error instanceof ApiError ? error.message : "Error fetching course .";
   }
 
   if (errorMessage) {
@@ -102,7 +102,7 @@ export default async function AdminCoursesPage({
         {filteredCourses.length === 0 ? (
           <div className="flex flex-col items-center gap-3 p-12 text-center">
             <BookOpen className="h-8 w-8 text-muted-foreground" />
-            <p className="text-muted-foreground">دوره‌ای پیدا نشد.</p>
+            <p className="text-muted-foreground">Can not find a course</p>
           </div>
         ) : (
           <div className="overflow-x-auto">

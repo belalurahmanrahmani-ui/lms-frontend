@@ -38,7 +38,7 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
     setIsLoading(false);
 
     if (!result.ok || !result.data) {
-      setError(result.errorMessage ?? "ساخت دوره ناموفق بود");
+     setError(result.errorMessage ?? "Failed to create course");
       return;
     }
 
@@ -116,7 +116,7 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
 
       {categories.length === 0 && (
         <p className="text-sm text-muted-foreground">
-          هنوز دسته‌بندی‌ای وجود ندارد. باید اول Admin دسته‌بندی بسازد.
+         No categories exist yet. An admin must create a category first.
         </p>
       )}
 
@@ -124,7 +124,7 @@ export function CreateCourseForm({ categories }: { categories: Category[] }) {
         type="submit"
         disabled={isLoading || isUploading || categories.length === 0}
       >
-        {isLoading ? "در حال ساخت..." : "Create Course"}
+        {isLoading ? " creating ..." : "Create Course"}
       </Button>
     </form>
   );

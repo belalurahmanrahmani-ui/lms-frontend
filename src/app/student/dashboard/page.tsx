@@ -69,7 +69,7 @@ export default async function StudentDashboardPage() {
 
         {progress.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            هنوز در دوره‌ای ثبت‌نام نکرده‌ای.
+              You have not enrolled in any courses yet
           </p>
         ) : (
           <div className="space-y-4">
@@ -94,8 +94,8 @@ export default async function StudentDashboardPage() {
 
         {data.recentLessons.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            هنوز هیچ درسی را تکمیل نکرده‌ای.
-          </p>
+        You have not completed any lessons yet         
+ </p>
         ) : (
           <ul className="divide-y divide-border">
             {data.recentLessons.map((lesson) => (

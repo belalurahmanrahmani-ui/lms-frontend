@@ -53,7 +53,7 @@ export function PopularCourses({ courses, errorMessage }: PopularCoursesProps) {
       {errorMessage ? (
         <p className="text-destructive">{errorMessage}</p>
       ) : filteredCourses.length === 0 ? (
-        <p className="text-muted-foreground">هنوز دوره‌ای ثبت نشده است.</p>
+        <p className="text-muted-foreground">No courses have been added yet.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredCourses.map((course) => (

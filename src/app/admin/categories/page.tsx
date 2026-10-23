@@ -14,7 +14,7 @@ export default async function AdminCategoriesPage() {
     categories = await apiFetchServer<Category[]>("/Category");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت دسته‌بندی‌ها";
+      error instanceof ApiError ? error.message : "Error fetching categories.";
   }
 
   if (errorMessage) {
@@ -36,7 +36,7 @@ export default async function AdminCategoriesPage() {
         {sortedCategories.length === 0 ? (
           <div className="flex flex-col items-center gap-3 p-12 text-center">
             <Tags className="h-8 w-8 text-muted-foreground" />
-            <p className="text-muted-foreground">هنوز دسته‌بندی‌ای ساخته نشده است.</p>
+            <p className="text-muted-foreground">هYou have not  created any Category yet</p>
           </div>
         ) : (
           <div className="overflow-x-auto">

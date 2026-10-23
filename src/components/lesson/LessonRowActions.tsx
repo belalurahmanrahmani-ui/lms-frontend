@@ -35,7 +35,7 @@ export function LessonRowActions({ lesson }: { lesson: Lesson }) {
   }
 
   async function handleDelete() {
-    if (!window.confirm(`درس «${lesson.title.trim()}» حذف شود؟`)) return;
+    if (!window.confirm(`Lesson «${lesson.title.trim()}» Delete ? `)) return;
 
     setError(null);
     setIsLoading(true);

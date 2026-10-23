@@ -14,7 +14,7 @@ export default async function TeacherCoursesPage() {
     courses = await apiFetchServer<Course[]>("/Course/my-course");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت دوره‌ها";
+      error instanceof ApiError ? error.message : "rror fetching courses .";
   }
 
   return (
@@ -38,7 +38,7 @@ export default async function TeacherCoursesPage() {
       ) : courses.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border p-12 text-center">
           <BookOpen className="h-8 w-8 text-muted-foreground" />
-          <p className="text-muted-foreground">هنوز دوره‌ای نساخته‌ای.</p>
+          <p className="text-muted-foreground">You have not create  any courses yet..</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -121,7 +121,7 @@ function MaterialForm({
 
       <div className="flex gap-2">
         <Button type="submit" disabled={isLoading || isUploading}>
-          {isLoading ? "در حال ذخیره..." : material ? "Save Changes" : "Add Material"}
+          {isLoading ? "Saving ..." : material ? "Save Changes" : "Add Material"}
         </Button>
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
@@ -171,7 +171,7 @@ export function MaterialsModal({
   }, [lesson.id, reloadKey]);
 
   async function handleDelete(material: Material) {
-    if (!window.confirm(`فایل «${material.fileName}» حذف شود؟`)) return;
+    if (!window.confirm(`File «${material.fileName}» Delete ?`)) return;
 
     setError(null);
     const result = await callBackend(`materials/${material.id}`, "DELETE");
@@ -213,10 +213,10 @@ export function MaterialsModal({
           )}
 
           {materials === null ? (
-            <p className="text-sm text-muted-foreground">در حال بارگذاری...</p>
+            <p className="text-sm text-muted-foreground">Loading ..</p>
           ) : materials.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              هنوز فایلی برای این درس اضافه نشده است.
+             No files have been added to this lesson yet.
             </p>
           ) : (
             <ul className="divide-y divide-border rounded-xl border border-border">

@@ -138,7 +138,7 @@ export default async function CoursesPage({
       {filteredCourses.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-12 text-center">
           <SearchX className="h-8 w-8 text-muted-foreground" />
-          <p className="text-muted-foreground">کورسی پیدا نشد.</p>
+          <p className="text-muted-foreground">Can not find a course</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

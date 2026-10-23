@@ -96,7 +96,7 @@ export function Navbar({ user }: { user: AuthUser | null }) {
       {/* Mobile menu */}
       {isOpen && (
         <div className="border-t border-border md:hidden">
-          <nav className="flex flex-col gap-1 px-6 py-4">
+          <nav className="flex flex-col gap-1 px-6 py-4 ">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

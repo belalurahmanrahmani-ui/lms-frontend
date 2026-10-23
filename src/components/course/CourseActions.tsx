@@ -32,7 +32,7 @@ export function CourseActions({
   }
 
   async function handleDelete() {
-    if (!window.confirm("آیا از حذف این دوره مطمئن هستی؟ این کار قابل بازگشت نیست.")) {
+if (!window.confirm("Are you sure you want to delete this course? This action cannot be undone.")) {
       return;
     }
 

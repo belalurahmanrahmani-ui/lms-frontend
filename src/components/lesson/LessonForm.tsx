@@ -32,13 +32,6 @@ export function LessonForm(props: LessonFormProps) {
     e.preventDefault();
     setError(null);
 
-    // ویدیو اختیاری است، ولی اگر وارد شد باید http/https باشد
-    // const cleanVideoUrl = videoUrl.trim();
-    // if (cleanVideoUrl && !/^https?:\/\//i.test(cleanVideoUrl)) {
-    //   setError("آدرس ویدیو باید با http:// یا https:// شروع شود");
-    //   return;
-    // }
-
     setIsLoading(true);
 
     const body = {

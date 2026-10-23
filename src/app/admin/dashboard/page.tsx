@@ -18,7 +18,7 @@ export default async function AdminDashboardPage() {
     data = await apiFetchServer<AdminDashboard>("/Admin/dashboard");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت اطلاعات داشبورد";
+      error instanceof ApiError ? error.message : "Error fetching dashboard data.";
   }
 
   if (errorMessage || !data) {

@@ -73,7 +73,7 @@ export function EditCourseForm({
       )}
       {saved && (
         <p className="rounded-md bg-primary/10 px-3 py-2 text-sm text-highlight">
-          تغییرات ذخیره شد.
+         Changes saved .
         </p>
       )}
 
@@ -139,7 +139,7 @@ export function EditCourseForm({
       </div>
 
             <Button type="submit" disabled={isLoading || isUploading}>
-        {isLoading ? "در حال ذخیره..." : "Save Changes"}
+        {isLoading ? "Saving ..." : "Save Changes"}
       </Button>
     </form>
   );

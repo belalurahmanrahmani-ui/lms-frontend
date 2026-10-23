@@ -5,7 +5,7 @@ export default async function StudentProfilePage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    return <p className="text-destructive">اطلاعات کاربر در دسترس نیست.</p>;
+    return <p className="text-destructive">User information is unavailable.</p>;
   }
 
   return (

@@ -12,7 +12,7 @@ export default async function HomePage() {
     courses = data.filter((course) => course.isPublished);
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت دوره‌ها";
+      error instanceof ApiError ? error.message : "Error Fatching courses ";
   }
 
   return (

@@ -35,10 +35,10 @@ export default async function StudentCoursesPage() {
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border p-12 text-center">
           <BookOpen className="h-8 w-8 text-muted-foreground" />
           <p className="text-muted-foreground">
-            هنوز در هیچ دوره‌ای ثبت‌نام نکرده‌ای.
+           You have not enrolled in any courses yet.
           </p>
           <Link href="/courses" className="text-sm text-primary hover:underline">
-            مرور دوره‌ها
+            Browse Courses
           </Link>
         </div>
       ) : (

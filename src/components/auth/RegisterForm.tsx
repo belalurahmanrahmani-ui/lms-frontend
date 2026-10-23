@@ -29,14 +29,14 @@ export function RegisterForm() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message ?? "ثبت‌نام ناموفق بود");
+        setError(data.message ?? "ragistration is field");
         return;
       }
 
       router.push("/");
       router.refresh();
     } catch {
-      setError("خطا در اتصال به سرور");
+      setError("Error connecting to the server");
     } finally {
       setIsLoading(false);
     }
@@ -87,7 +87,7 @@ export function RegisterForm() {
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "در حال ثبت‌نام..." : "Create Account"}
+        {isLoading ? "Ragisteing  ..." : "Create Account"}
       </Button>
     </form>
   );

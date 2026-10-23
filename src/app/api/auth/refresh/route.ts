@@ -16,7 +16,7 @@ export async function POST() {
 
   if (!auth) {
     return NextResponse.json(
-      { message: "نشست منقضی شده، لطفاً دوباره وارد شوید" },
+      { message: "Pleas login again" },
       { status: 401 }
     );
   }

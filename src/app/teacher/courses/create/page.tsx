@@ -10,7 +10,7 @@ export default async function CreateCoursePage() {
     categories = await apiFetchServer<Category[]>("/Category");
   } catch (error) {
     errorMessage =
-      error instanceof ApiError ? error.message : "خطا در دریافت دسته‌بندی‌ها";
+      error instanceof ApiError ? error.message : "Error fetching categories";
   }
 
   return (
